@@ -1,0 +1,12 @@
+.ipynb_checkpoints
+**/.ipynb_checkpoints/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.env
+
+# macOS
+.DS_Store
