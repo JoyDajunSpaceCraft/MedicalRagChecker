@@ -75,10 +75,195 @@
 #   --max-chars-per-doc 1200 \
 #   --safety-margin 96
 
+
+# PMC_llama_13B
+# ================================
+# PMC_LLaMA_13B inference commands
+# Notes (English-only comments):
+# - Make sure your vLLM server for PMC_LLaMA_13B is running on port 8001 with --max-model-len 2048.
+# - This script will auto-switch to /v1/completions if no chat_template is present.
+# - If you still hit 400 "context too long", reduce --max-docs or --max-chars-per-doc slightly.
+# ================================
+
+# ---------- PubMedQA (artificial) ----------
+# python gen_with_vllm.py \
+#   --in-jsonl /ocean/projects/med230010p/yji3/MedicalRagChecker/medical_data/runs_pubmedqa_pqa_artificial/rag_generation_outputs_pubmedqa_train.jsonl \
+#   --out-jsonl /ocean/projects/med230010p/yji3/MedicalRagChecker/medical_data/runs_pubmedqa_pqa_artificial/PMC_LLaMA_13B/rag_generation_outputs_pubmedqa_train.PMC_LLaMA_13B.gen100.jsonl \
+#   --model PMC_LLaMA_13B \
+#   --base-url http://127.0.0.1:8001/v1 \
+#   --tokenizer-name /ocean/projects/med230010p/yji3/models/PMC_LLaMA_13B \
+#   --max-new-tokens 128 \
+#   --context-window 2048 \
+#   --max-docs 8 \
+#   --max-chars-per-doc 1200 \
+#   --safety-margin 128
+
+# # ---------- LiveQA (test) ----------
+# python gen_with_vllm.py \
+#   --in-jsonl /ocean/projects/med230010p/yji3/MedicalRagChecker/medical_data/runs_liveqa_full/rag_generation_outputs_liveqa_test.jsonl \
+#   --out-jsonl /ocean/projects/med230010p/yji3/MedicalRagChecker/medical_data/runs_liveqa_full/PMC_LLaMA_13B/rag_generation_outputs_liveqa_test.PMC_LLaMA_13B.gen100.jsonl \
+#   --model PMC_LLaMA_13B \
+#   --base-url http://127.0.0.1:8001/v1 \
+#   --tokenizer-name /ocean/projects/med230010p/yji3/models/PMC_LLaMA_13B \
+#   --max-new-tokens 128 \
+#   --context-window 2048 \
+#   --max-docs 8 \
+#   --max-chars-per-doc 1200 \
+#   --safety-margin 128
+
+# # ---------- CSIRO (train) ----------
+# # This split previously used tighter packing; keep doc/char caps conservative for 2k window.
+# python gen_with_vllm.py \
+#   --in-jsonl /ocean/projects/med230010p/yji3/MedicalRagChecker/medical_data/runs_csiro_train/rag_generation_outputs_csiro_train.jsonl \
+#   --out-jsonl /ocean/projects/med230010p/yji3/MedicalRagChecker/medical_data/runs_csiro_train/PMC_LLaMA_13B/rag_generation_outputs_csiro_train.PMC_LLaMA_13B.gen100.jsonl \
+#   --model PMC_LLaMA_13B \
+#   --base-url http://127.0.0.1:8001/v1 \
+#   --tokenizer-name /ocean/projects/med230010p/yji3/models/PMC_LLaMA_13B \
+#   --max-new-tokens 128 \
+#   --context-window 2048 \
+#   --safety-margin 160 \
+#   --max-docs 6 \
+#   --max-chars-per-doc 800 \
+# --skip-on-overflow
+
+# # ---------- CSIRO (val) ----------
+# python gen_with_vllm.py \
+#   --in-jsonl /ocean/projects/med230010p/yji3/MedicalRagChecker/medical_data/runs_csiro_val/rag_generation_outputs_csiro_val.jsonl \
+#   --out-jsonl /ocean/projects/med230010p/yji3/MedicalRagChecker/medical_data/runs_csiro_val/PMC_LLaMA_13B/rag_generation_outputs_csiro_val.PMC_LLaMA_13B.gen100.jsonl \
+#   --model PMC_LLaMA_13B \
+#   --base-url http://127.0.0.1:8001/v1 \
+#   --tokenizer-name /ocean/projects/med230010p/yji3/models/PMC_LLaMA_13B \
+#   --max-new-tokens 128 \
+#   --context-window 2048 \
+#   --max-docs 8 \
+#   --max-chars-per-doc 1200 \
+#   --safety-margin 128
+
+# # ---------- CSIRO (test) ----------
+# python gen_with_vllm.py \
+#   --in-jsonl /ocean/projects/med230010p/yji3/MedicalRagChecker/medical_data/runs_csiro_test/rag_generation_outputs_csiro_test.jsonl \
+#   --out-jsonl /ocean/projects/med230010p/yji3/MedicalRagChecker/medical_data/runs_csiro_test/PMC_LLaMA_13B/rag_generation_outputs_csiro_test.PMC_LLaMA_13B.gen100.jsonl \
+#   --model PMC_LLaMA_13B \
+#   --base-url http://127.0.0.1:8001/v1 \
+#   --tokenizer-name /ocean/projects/med230010p/yji3/models/PMC_LLaMA_13B \
+#   --max-new-tokens 128 \
+#   --context-window 2048 \
+#   --max-docs 8 \
+#   --max-chars-per-doc 1200 \
+#   --safety-margin 128 \
+#   --skip-on-overflow
+
+
+# # ---------- MedQuAD (train) ----------
+# python gen_with_vllm.py \
+#   --in-jsonl /ocean/projects/med230010p/yji3/MedicalRagChecker/medical_data/runs_medquad_full/rag_generation_outputs_medquad_train.jsonl \
+#   --out-jsonl /ocean/projects/med230010p/yji3/MedicalRagChecker/medical_data/runs_medquad_full/PMC_LLaMA_13B/rag_generation_outputs_medquad_train.PMC_LLaMA_13B.gen100.jsonl \
+#   --model PMC_LLaMA_13B \
+#   --base-url http://127.0.0.1:8001/v1 \
+#   --tokenizer-name /ocean/projects/med230010p/yji3/models/PMC_LLaMA_13B \
+#   --max-new-tokens 128 \
+#   --context-window 2048 \
+#   --max-docs 8 \
+#   --max-chars-per-doc 1200 \
+#   --safety-margin 128
+
+
+
+
 import os, json, argparse
 from tqdm import tqdm
 from openai import OpenAI
 from typing import List, Dict, Any, Tuple, Optional
+# --- helpers: context packing & prompt building (INSERT near imports) ---
+def prompt_token_len(prompt: str) -> int:
+    """Exact token count for a single prompt string (completions style)."""
+    if TOK is None:
+        return count_tokens_approx(prompt)
+    try:
+        return len(TOK(prompt, add_special_tokens=True).input_ids)
+    except Exception as e:
+        print(f"[WARN] prompt token count failed, fallback approx: {e}")
+        return count_tokens_approx(prompt)
+
+
+def trim_chunks_to_limit(
+    question: str,
+    chunks: List[str],
+    hard_limit: int,
+    max_new_tokens: int,
+    safety_extra: int = 64,
+) -> List[str]:
+    """
+    Ensure prompt token count <= hard_limit - max_new_tokens - safety_extra.
+    Strategy:
+      1) Drop chunks from the end until under limit.
+      2) If still over, binary-search truncate on the last remaining chunk.
+    """
+    if hard_limit <= 0:
+        return []
+
+    def build_prompt(chs: List[str]) -> str:
+        ctx_txt = "\n\n".join(f"- {c}" for c in chs)
+        return PROMPT_TMPL.format(question=question, context=ctx_txt)
+
+    budget = hard_limit - max_new_tokens - safety_extra
+    if budget <= 0:
+        return []
+
+    kept = list(chunks)
+    # Step 1: drop whole chunks from the end
+    while kept:
+        p = build_prompt(kept)
+        t = prompt_token_len(p)
+        if t <= budget:
+            return kept
+        kept.pop()  # drop last chunk
+
+    # If no chunks left still exceed (very rare), return empty list or truncate question
+    p = build_prompt([])
+    if prompt_token_len(p) <= budget:
+        return []
+    # As a last resort: hard-cut the question (should not happen with reasonable budgets)
+    q = question
+    lo, hi, best = 0, len(q), ""
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        p = PROMPT_TMPL.format(question=q[:mid], context="")
+        if prompt_token_len(p) <= budget:
+            best = q[:mid]
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return []  # keep empty chunks; question was cut above if needed
+
+def _pack_context(ctx_items, max_docs=8, max_chars_per_doc=1200, max_chars_total=12000):
+    # English-only comments: pack retrieved docs conservatively to avoid over-truncation
+    kept, total = [], 0
+    for i, d in enumerate(ctx_items[:max_docs], 1):
+        t = (d.get("text") or "").strip()
+        if not t:
+            continue
+        t = t[:max_chars_per_doc]
+        if total + len(t) > max_chars_total:
+            break
+        kept.append(f"[Doc {i}]\n{t}")
+        total += len(t)
+    return "\n\n".join(kept)
+
+def _build_rag_prompt(question, ctx_block):
+    # English-only comments: conservative but not silent
+    instr = (
+        "You are a medical QA assistant. Prefer to answer using the CONTEXT.\n"
+        "If evidence is partial, give the best-supported answer and note uncertainty.\n"
+        "If there is no relevant evidence at all, say: I don't know."
+    )
+    return (
+        f"{instr}\n\n"
+        f"QUESTION:\n{(question or '').strip()}\n\n"
+        f"CONTEXT:\n{ctx_block if ctx_block.strip() else '[No retrieved context]'}\n\n"
+        "FINAL ANSWER:"
+    )
+
 
 # ---------------- Token counting helpers ----------------
 
@@ -96,25 +281,72 @@ def messages_token_len_approx(msgs: List[Dict[str, str]]) -> int:
 # Will be set later if transformers tokenizer loads successfully.
 TOK = None
 
+# def token_len_exact(messages: List[Dict[str, str]]) -> int:
+#     """
+#     Exact token count using tokenizer's chat template if available.
+#     Falls back to rough estimate when tokenizer is missing or fails.
+#     """
+#     global TOK
+#     if TOK is None:
+#         return messages_token_len_approx(messages)
+#     try:
+#         # apply_chat_template returns a list[int] if tokenize=True
+#         input_ids = TOK.apply_chat_template(
+#             messages,
+#             add_generation_prompt=True,  # mimic vLLM ChatCompletions packing
+#             tokenize=True,
+#             return_tensors=None,
+#         )
+#         return len(input_ids)
+#     except Exception as e:
+#         print(f"[WARN] chat template failed, falling back to approx: {e}")
+#         return messages_token_len_approx(messages)
+# --- replace token_len_exact() with this version ---
+# def token_len_exact(messages: List[Dict[str, str]]) -> int:
+#     """
+#     Exact token count.
+#     - If the tokenizer has a chat_template: use apply_chat_template(tokenize=True).
+#     - Otherwise (no chat template): build the final prompt string and tokenize it.
+#     Falls back to rough estimate on any failure.
+#     """
+#     global TOK
+#     if TOK is None:
+#         return messages_token_len_approx(messages)
+#     try:
+#         # Case 1: chat template available -> chat-format counting
+#         if getattr(TOK, "chat_template", None):
+#             input_ids = TOK.apply_chat_template(
+#                 messages,
+#                 add_generation_prompt=True,
+#                 tokenize=True,
+#                 return_tensors=None,
+#             )
+#             return len(input_ids)
+#         # Case 2: no chat template -> completions-style single prompt counting
+#         prompt = messages[0].get("content", "") if messages else ""
+#         return len(TOK(prompt, add_special_tokens=True).input_ids)
+#     except Exception as e:
+#         print(f"[WARN] exact token count failed, falling back to approx: {e}")
+#         return messages_token_len_approx(messages)
 def token_len_exact(messages: List[Dict[str, str]]) -> int:
-    """
-    Exact token count using tokenizer's chat template if available.
-    Falls back to rough estimate when tokenizer is missing or fails.
-    """
+    """Exact token count; chat-template vs. completions prompt."""
     global TOK
     if TOK is None:
         return messages_token_len_approx(messages)
     try:
-        # apply_chat_template returns a list[int] if tokenize=True
-        input_ids = TOK.apply_chat_template(
-            messages,
-            add_generation_prompt=True,  # mimic vLLM ChatCompletions packing
-            tokenize=True,
-            return_tensors=None,
-        )
-        return len(input_ids)
+        if getattr(TOK, "chat_template", None):
+            input_ids = TOK.apply_chat_template(
+                messages,
+                add_generation_prompt=True,
+                tokenize=True,
+                return_tensors=None,
+            )
+            return len(input_ids)
+        # No chat template → single prompt counting
+        prompt = messages[0].get("content", "") if messages else ""
+        return prompt_token_len(prompt)
     except Exception as e:
-        print(f"[WARN] chat template failed, falling back to approx: {e}")
+        print(f"[WARN] exact token count failed, falling back to approx: {e}")
         return messages_token_len_approx(messages)
 
 # ---------------- Prompt/template ----------------
@@ -240,6 +472,9 @@ def main():
     ap.add_argument("--tokenizer-name", type=str, default=None,
                     help="HF name or local path for the tokenizer matching your vLLM model. "
                          "If omitted, will try to use --model.")
+    ap.add_argument("--skip-on-overflow", action="store_true",
+                help="Skip an item if the packed prompt exceeds the current context budget.")
+
 
     args = ap.parse_args()
 
@@ -302,15 +537,95 @@ def main():
             # Final guard: if still negative, clamp to 1
             if this_max_tokens <= 0:
                 this_max_tokens = 1
+            # --- overflow guard & optional skip (English-only comments) ---
+            # Conservative hard limit (leave 1 token headroom)
+            hard_limit = args.context_window - 1
+            # Reserve half of safety-margin to buffer server-side discrepancies
+            safety_extra = max(32, args.safety_margin // 2)
+            target_budget = hard_limit - this_max_tokens - safety_extra
+            
+            # Count input tokens according to the path we will use
+            use_chat = bool(getattr(TOK, "chat_template", None))
+            if use_chat:
+                cur_input_tokens = token_len_exact(msgs)  # chat-template counting
+            else:
+                prompt_preview = msgs[0]["content"] if msgs and "content" in msgs[0] else ""
+                cur_input_tokens = prompt_token_len(prompt_preview)  # completions-style counting
+            
+            # If over budget, and user asked to skip, mark & skip this item
+            if args.skip_on_overflow and cur_input_tokens > target_budget:
+                print(f"[SKIP] overflow: input={cur_input_tokens} > budget={target_budget} (idx={n})")
+                row["rag_response"] = ""
+                row["_skipped_overflow"] = True
+                row["_debug_input_tokens"] = cur_input_tokens
+                row["_debug_target_budget"] = target_budget
+                # Optionally also store how many chunks were kept before skipping
+                row["_debug_ctx_chunks_before_skip"] = len(chunks)
+                fout.write(json.dumps(row, ensure_ascii=False) + "\n")
+                n += 1
+                continue
 
-            # Create the completion call with per-item max_tokens
-            resp = client.chat.completions.create(
-                model=args.model,
-                messages=msgs,
-                temperature=args.temperature,
-                max_tokens=this_max_tokens,
-            )
-            text = resp.choices[0].message.content.strip() if resp.choices else ""
+            # # Create the completion call with per-item max_tokens
+            # resp = client.chat.completions.create(
+            #     model=args.model,
+            #     messages=msgs,
+            #     temperature=args.temperature,
+            #     max_tokens=this_max_tokens,
+            # )
+            # text = resp.choices[0].message.content.strip() if resp.choices else ""
+            # English-only comments: use Chat Completions if chat template is available; otherwise fall back to Completions.
+            use_chat = bool(getattr(TOK, "chat_template", None))
+            hard_limit = args.context_window - 1  # conservative headroom
+
+            if not use_chat:
+                # Rebuild prompt and trim if necessary
+                prompt = msgs[0]["content"] if msgs and "content" in msgs[0] else ""
+                ptoks = prompt_token_len(prompt)
+                # We guarantee prompt tokens ≤ hard_limit - this_max_tokens - safety_extra
+                safety_extra = max(32, args.safety_margin // 2)  # e.g., 64 when margin=128
+                target_budget = hard_limit - this_max_tokens - safety_extra
+            
+                if ptoks > target_budget:
+                    # Trim chunks to fit strictly
+                    trimmed = trim_chunks_to_limit(
+                        question=question,
+                        chunks=chunks,
+                        hard_limit=hard_limit,
+                        max_new_tokens=this_max_tokens,
+                        safety_extra=safety_extra,
+                    )
+                    # Rebuild messages and recompute exact counts
+                    msgs = build_messages(question, trimmed)
+                    prompt = msgs[0]["content"]
+                    ptoks = prompt_token_len(prompt)
+            
+                    # If still too long (extremely rare), reduce max completion tokens
+                    if ptoks > target_budget:
+                        overflow = ptoks - target_budget
+                        this_max_tokens = max(1, this_max_tokens - overflow)
+            
+                    # As final guard, clamp to 1 if negative
+                    if this_max_tokens <= 0:
+                        this_max_tokens = 1
+
+            if use_chat:
+                resp = client.chat.completions.create(
+                    model=args.model,
+                    messages=msgs,
+                    temperature=args.temperature,
+                    max_tokens=this_max_tokens,
+                )
+                text = resp.choices[0].message.content.strip() if resp.choices else ""
+            else:
+                # Build a single prompt string identical to what the user message contained
+                prompt = msgs[0]["content"] if msgs and "content" in msgs[0] else ""
+                resp = client.completions.create(
+                    model=args.model,
+                    prompt=prompt,
+                    temperature=args.temperature,
+                    max_tokens=this_max_tokens,
+                )
+                text = resp.choices[0].text.strip() if resp.choices else ""
 
             row["rag_response"] = text
             # (Optional) record debug info for auditing
